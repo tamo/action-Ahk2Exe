@@ -35,20 +35,22 @@ runs:
         }
         function fetchit ($url, $zip, $file) {
           $cwd = pwd;
-          mkdir "${{ inputs.tmpdir }}";
+          if (!(Test-Path "${{ inputs.tmpdir }}")) {
+            mkdir "${{ inputs.tmpdir }}";
+          }
           cd "${{ inputs.tmpdir }}";
           curl -LJo "${zip}" "${url}";
           7z x "${zip}";
           cd "${cwd}";
           cp "${{ inputs.tmpdir }}/${file}" "${file}";
         }
-        if (ls "${{ inputs.ahk2exe }}") {
+        if (Test-Path "${{ inputs.ahk2exe }}") {
           echo "Ahk2Exe is already here";
         } else {
           $A2EURL = latesturl "AutoHotkey/Ahk2Exe" "application/x-zip-compressed";
           fetchit "${A2EURL}" "a2e.zip" "${{ inputs.ahk2exe }}";
         }
-        if (ls "${{ inputs.base }}") {
+        if (Test-Path "${{ inputs.base }}") {
           echo "Base binary is already here";
         } else {
           $AHKURL = latesturl "AutoHotkey/AutoHotkey"  "application/zip";
