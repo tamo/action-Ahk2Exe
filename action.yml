@@ -6,11 +6,11 @@ inputs:
   ahk2exe:
     description: compiler
     required: false
-    default: Ahk2Exe.exe
+    default: _ahktmp/Ahk2Exe.exe
   base:
     description: binary to embed
     required: false
-    default: AutoHotkey32.exe
+    default: _ahktmp/AutoHotkey32.exe
   src:
     description: script
     required: false
