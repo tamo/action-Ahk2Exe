@@ -13,7 +13,8 @@ inputs:
     default: AutoHotkey32.exe
   src:
     description: script
-    required: true
+    required: false
+    default: ""
   opt:
     description: other options for ahk2exe
     required: false
@@ -42,7 +43,9 @@ runs:
           curl -LJo "${zip}" "${url}";
           7z x "${zip}";
           cd "${cwd}";
-          cp "${{ inputs.tmpdir }}/${file}" "${file}";
+          if (!(Test-Path "${file}")) {
+            cp "${{ inputs.tmpdir }}/${file}" "${file}";
+          }
         }
         if (Test-Path "${{ inputs.ahk2exe }}") {
           echo "Ahk2Exe is already here";
@@ -57,6 +60,7 @@ runs:
           fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
         }
     - name: Build
+      if: inputs.src != ""
       shell: pwsh
       run: |
         $a2e = ls "${{ inputs.ahk2exe }}";
