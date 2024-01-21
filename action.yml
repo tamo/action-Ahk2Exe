@@ -27,6 +27,7 @@ runs:
   using: composite
   steps:
     - name: Fetch executables
+      shell: pwsh
       run: |
         function latesturl ($repo, $type) {
           curl -H "Accept: application/vnd.github.v3+json" -s
@@ -58,6 +59,7 @@ runs:
           fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
         }
     - name: Build
+      shell: pwsh
       run: |
         $a2e = ls "${{ inputs.ahk2exe }}";
         & ${a2e} /base "${{ inputs.base }}" /in "${{ inputs.src }}" ${{ inputs.opt }};
