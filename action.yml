@@ -60,7 +60,7 @@ runs:
           fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
         }
     - name: Build
-      if: inputs.src != ""
+      if: inputs.src != ''
       shell: pwsh
       run: |
         $a2e = ls "${{ inputs.ahk2exe }}";
