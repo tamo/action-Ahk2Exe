@@ -23,7 +23,7 @@ Nothing required.
 
 ## examples
 
-Simply use it with src.
+Simply use it with `src`.
 
 ```yaml
 jobs:
@@ -42,7 +42,7 @@ jobs:
     - run: ls RestoreWinPos.exe
 ```
 
-Specify `base`.
+Specify `base` to embed 64bit binary.
 
 ```yaml
 jobs:
@@ -62,7 +62,7 @@ jobs:
     - run: ls RestoreWinPos.exe
 ```
 
-Or prepare and use it multiple times.
+Or use it multiple times after preparation.
 
 ```yaml
 jobs:
