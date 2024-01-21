@@ -30,12 +30,8 @@ runs:
       shell: pwsh
       run: |
         function latesturl ($repo, $type) {
-          curl -H "Accept: application/vnd.github.v3+json" -s
-            https://api.github.com/repos/${repo}/releases/latest
-          | jq -r (
-            '.assets[] | select(.content_type == \"{0}\") | .browser_download_url'
-            -f ${type}
-          );
+          curl -H "Accept: application/vnd.github.v3+json" -s "https://api.github.com/repos/${repo}/releases/latest"
+          | jq -r ('.assets[] | select(.content_type == \"{0}\") | .browser_download_url' -f ${type});
         }
         function fetchit ($url, $zip, $file) {
           $cwd = pwd;
