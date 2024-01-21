@@ -1,0 +1,63 @@
+name: Ahk2Exe v2 scripts
+description: Convert AutoHotkey v2 scripts to executables with Ahk2Exe
+author: tamo
+
+inputs:
+  ahk2exe:
+    description: compiler
+    required: false
+    default: Ahk2Exe.exe
+  base:
+    description: binary to embed
+    required: false
+    default: AutoHotkey32.exe
+  src:
+    description: script
+    required: true
+  opt:
+    description: other options for ahk2exe
+    required: false
+    default: ""
+  tmpdir:
+    description: folder to download zips in
+    required: false
+    default: _ahktmp
+
+runs:
+  using: composite
+  steps:
+    - name: Fetch executables
+      run: |
+        function latesturl ($repo, $type) {
+          curl -H "Accept: application/vnd.github.v3+json" -s
+            https://api.github.com/repos/${repo}/releases/latest
+          | jq -r (
+            '.assets[] | select(.content_type == \"{0}\") | .browser_download_url'
+            -f ${type}
+          );
+        }
+        function fetchit ($url, $zip, $file) {
+          $cwd = pwd;
+          mkdir "${{ inputs.tmpdir }}";
+          cd "${{ inputs.tmpdir }}";
+          curl -LJo "${zip}" "${url}";
+          7z x "${zip}";
+          cd "${cwd}";
+          cp "${{ inputs.tmpdir }}/${file}" "${file}";
+        }
+        if (ls "${{ inputs.ahk2exe }}") {
+          echo "Ahk2Exe is already here";
+        } else {
+          $A2EURL = latesturl "AutoHotkey/Ahk2Exe" "application/x-zip-compressed";
+          fetchit "${A2EURL}" "a2e.zip" "${{ inputs.ahk2exe }}";
+        }
+        if (ls "${{ inputs.base }}") {
+          echo "Base binary is already here";
+        } else {
+          $AHKURL = latesturl "AutoHotkey/AutoHotkey"  "application/zip";
+          fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
+        }
+    - name: Build
+      run: |
+        $a2e = ls "${{ inputs.ahk2exe }}";
+        & ${a2e} /base "${{ inputs.base }}" /in "${{ inputs.src }}" ${{ inputs.opt }};
