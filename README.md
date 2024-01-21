@@ -42,6 +42,26 @@ jobs:
     - run: ls RestoreWinPos.exe
 ```
 
+Specify `base`.
+
+```yaml
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Ahk2Exe (64bit)
+      uses: tamo/action-Ahk2Exe@main
+      with:
+        base: AutoHotkey64.exe
+        src: RestoreWinPos.ahk
+
+    - run: ls RestoreWinPos.exe
+```
+
 Or prepare and use it multiple times.
 
 ```yaml
