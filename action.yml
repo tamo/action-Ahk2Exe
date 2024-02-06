@@ -36,7 +36,7 @@ runs:
             mkdir "${{ inputs.tmpdir }}";
           }
           cd "${{ inputs.tmpdir }}";
-          curl -H "Accept: application/vnd.github.v3+json" -o _latest.json --no-progress-meter "https://api.github.com/repos/${repo}/releases/latest";
+          curl -H "Accept: application/vnd.github.v3+json" -o _latest.json --no-progress-meter https://api.github.com/repos/${repo}/releases/latest;
           cat _latest.json | jq -r ('.assets[] | select(.content_type == \"{0}\") | .browser_download_url' -f ${type});
           cd "${cwd}";
         }
