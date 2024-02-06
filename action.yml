@@ -31,17 +31,14 @@ runs:
       shell: pwsh
       run: |
         function latesturl ($repo, $type) {
+          curl -H "Accept: application/vnd.github.v3+json" --no-progress-meter "https://api.github.com/repos/${repo}/releases/latest"
+          | jq -r ('.assets[] | select(.content_type == "{0}") | .browser_download_url' -f "${type}");
+        }
+        function fetchit ($url, $zip, $file) {
           $cwd = pwd;
           if (!(Test-Path "${{ inputs.tmpdir }}")) {
             mkdir "${{ inputs.tmpdir }}";
           }
-          cd "${{ inputs.tmpdir }}";
-          curl -H "Accept: application/vnd.github.v3+json" --no-progress-meter "https://api.github.com/repos/${repo}/releases/latest"
-          | jq -r ('.assets[] | select(.content_type == "{0}") | .browser_download_url' -f ${type});
-          cd "${cwd}";
-        }
-        function fetchit ($url, $zip, $file) {
-          $cwd = pwd;
           cd "${{ inputs.tmpdir }}";
           curl -LJo "${zip}" "${url}";
           7z x "${zip}";
@@ -54,12 +51,14 @@ runs:
           echo "Ahk2Exe is already here";
         } else {
           $A2EURL = latesturl "AutoHotkey/Ahk2Exe" "application/x-zip-compressed";
+          echo "fetch ${A2EURL}";
           fetchit "${A2EURL}" "a2e.zip" "${{ inputs.ahk2exe }}";
         }
         if (Test-Path "${{ inputs.base }}") {
           echo "Base binary is already here";
         } else {
           $AHKURL = latesturl "AutoHotkey/AutoHotkey"  "application/zip";
+          echo "fetch ${AHKURL}";
           fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
         }
     - name: Build
