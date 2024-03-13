@@ -61,9 +61,12 @@ runs:
           echo "fetch ${AHKURL}";
           fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
         }
+    - name: Test-Path
+      shell: pwsh
+      run: |
+        Test-Path "${{ inputs.ahk2exe }}"
+        Test-Path "${{ inputs.base }}"
     - name: Build
       if: inputs.src != ''
       shell: pwsh
-      run: |
-        $a2e = ls "${{ inputs.ahk2exe }}";
-        & ${a2e} /base "${{ inputs.base }}" /in "${{ inputs.src }}" ${{ inputs.opt }};
+      run: & (ls "${{ inputs.ahk2exe }}") /base "${{ inputs.base }}" /in "${{ inputs.src }}" ${{ inputs.opt }};
