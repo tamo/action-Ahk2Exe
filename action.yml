@@ -69,4 +69,5 @@ runs:
     - name: Build
       if: inputs.src != ''
       shell: pwsh
-      run: & (ls "${{ inputs.ahk2exe }}") /base "${{ inputs.base }}" /in "${{ inputs.src }}" ${{ inputs.opt }};
+      run: |
+        & (ls "${{ inputs.ahk2exe }}") /base "${{ inputs.base }}" /in "${{ inputs.src }}" ${{ inputs.opt }};
