@@ -64,10 +64,10 @@ runs:
     - name: Test-Path
       shell: pwsh
       run: |
-        Test-Path "${{ inputs.ahk2exe }}"
-        Test-Path "${{ inputs.base }}"
+        Test-Path "${{ inputs.ahk2exe }}";
+        Test-Path "${{ inputs.base }}";
     - name: Build
       if: inputs.src != ''
       shell: pwsh
       run: |
-        & (ls "${{ inputs.ahk2exe }}") /base "${{ inputs.base }}" /in "${{ inputs.src }}" ${{ inputs.opt }};
+        & (ls "${{ inputs.ahk2exe }}") /silent verbose /base "${{ inputs.base }}" /in "${{ inputs.src }}" ${{ inputs.opt }};
