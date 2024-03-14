@@ -16,7 +16,7 @@ jobs:
         with:
           src: RestoreWinPos.ahk
 
-      - run: ls RestoreWinPos.ahk
+      - run: ls RestoreWinPos.exe
 
       - name: Ahk2Exe (64bit)
         uses: tamo/action-Ahk2Exe@main
@@ -25,4 +25,4 @@ jobs:
           base: _ahktmp/AutoHotkey64.exe
           opt: /out RestoreWinPos64.exe
 
-      - run: ls RestoreWinPos64.ahk
+      - run: ls RestoreWinPos64.exe
