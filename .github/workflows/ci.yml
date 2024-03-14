@@ -1,0 +1,28 @@
+name: CI
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: tamo/RestoreWinPos.ahk
+
+      - name: Ahk2Exe (32bit)
+        uses: tamo/action-Ahk2Exe@main
+        with:
+          src: RestoreWinPos.ahk
+
+      - run: ls RestoreWinPos.ahk
+
+      - name: Ahk2Exe (64bit)
+        uses: tamo/action-Ahk2Exe@main
+        with:
+          src: RestoreWinPos.ahk
+          base: _ahktmp/AutoHotkey64.exe
+          opt: /out RestoreWinPos64.exe
+
+      - run: ls RestoreWinPos64.ahk
