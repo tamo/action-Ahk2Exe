@@ -60,7 +60,7 @@ runs:
           Write-Output "fetch ${AHKURL}";
           fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
         }
-        if (!(Test-Path "${{ inputs.ahk2exe }}") -or !(Test-Path "${{ inputs.base }}") {
+        if (!(Test-Path "${{ inputs.ahk2exe }}") -or !(Test-Path "${{ inputs.base }}")) {
           Write-Output "Something failed";
           exit 1;
         }
