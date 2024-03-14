@@ -35,36 +35,38 @@ runs:
           | jq -r ('.assets[] | select(.content_type == "{0}") | .browser_download_url' -f "${type}");
         }
         function fetchit ($url, $zip, $file) {
-          $cwd = pwd;
           if (!(Test-Path "${{ inputs.tmpdir }}")) {
-            mkdir "${{ inputs.tmpdir }}";
+            New-Item -Type Directory "${{ inputs.tmpdir }}";
           }
-          cd "${{ inputs.tmpdir }}";
+          Push-Location "${{ inputs.tmpdir }}";
           curl -LJo "${zip}" "${url}";
           7z x "${zip}";
-          cd "${cwd}";
+          Pop-Location;
           if (!(Test-Path "${file}")) {
-            cp "${{ inputs.tmpdir }}/${file}" "${file}";
+            Copy-Item "${{ inputs.tmpdir }}/${file}" "${file}";
           }
         }
         if (Test-Path "${{ inputs.ahk2exe }}") {
-          echo "Ahk2Exe is already here";
+          Write-Output "Ahk2Exe is already here";
         } else {
           $A2EURL = latesturl "AutoHotkey/Ahk2Exe" "application/x-zip-compressed";
-          echo "fetch ${A2EURL}";
+          Write-Output "fetch ${A2EURL}";
           fetchit "${A2EURL}" "a2e.zip" "${{ inputs.ahk2exe }}";
         }
         if (Test-Path "${{ inputs.base }}") {
-          echo "Base binary is already here";
+          Write-Output "Base binary is already here";
         } else {
           $AHKURL = latesturl "AutoHotkey/AutoHotkey"  "application/zip";
-          echo "fetch ${AHKURL}";
+          Write-Output "fetch ${AHKURL}";
           fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
+        }
+        if (!(Test-Path "${{ inputs.ahk2exe }}") -or !(Test-Path "${{ inputs.base }}") {
+          Write-Output "Something failed";
+          exit 1;
         }
     - name: Build
       if: inputs.src != ''
       shell: pwsh
       run: |
-        Test-Path "${{ inputs.ahk2exe }}";
-        Test-Path "${{ inputs.base }}";
-        & (ls "${{ inputs.ahk2exe }}") /silent verbose /base "${{ inputs.base }}" /in "${{ inputs.src }}" ${{ inputs.opt }} | Write-Output;
+        & (Get-ChildItem "${{ inputs.ahk2exe }}") /silent verbose /base "${{ inputs.base }}" /in "${{ inputs.src }}" ${{ inputs.opt }} | Out-Host;
+        Write-Output "exit code is $LASTEXITCODE";
