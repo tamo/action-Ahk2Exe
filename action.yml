@@ -30,9 +30,9 @@ runs:
     - name: Fetch executables
       shell: pwsh
       run: |
-        function latesturl ($repo, $type) {
+        function latesturl ($repo, $type, $taghead) {
           curl -H "Accept: application/vnd.github.v3+json" --no-progress-meter "https://api.github.com/repos/${repo}/releases/latest"
-          | jq -r ('.assets[] | select(.content_type == "{0}") | .browser_download_url' -f "${type}");
+          | jq -r ('first(.[] | select(.tag_name | startswith("{0}"))) | .assets[] | select(.content_type == "{1}") | .browser_download_url' -f "${taghead}","${type}");
         }
         function fetchit ($url, $zip, $file) {
           if (!(Test-Path "${{ inputs.tmpdir }}")) {
@@ -49,14 +49,14 @@ runs:
         if (Test-Path "${{ inputs.ahk2exe }}") {
           Write-Output "Ahk2Exe is already here";
         } else {
-          $A2EURL = latesturl "AutoHotkey/Ahk2Exe" "application/x-zip-compressed";
+          $A2EURL = latesturl "AutoHotkey/Ahk2Exe" "application/x-zip-compressed" "v2.";
           Write-Output "fetch ${A2EURL}";
           fetchit "${A2EURL}" "a2e.zip" "${{ inputs.ahk2exe }}";
         }
         if (Test-Path "${{ inputs.base }}") {
           Write-Output "Base binary is already here";
         } else {
-          $AHKURL = latesturl "AutoHotkey/AutoHotkey"  "application/zip";
+          $AHKURL = latesturl "AutoHotkey/AutoHotkey" "application/zip" "Ahk2Exe";
           Write-Output "fetch ${AHKURL}";
           fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
         }
