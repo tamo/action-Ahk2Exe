@@ -8,7 +8,7 @@ It downloads the latest versions of AutoHotkey and Ahk2Exe.
 
 ## inputs
 
-Nothing required.
+All optional.
 
 - tmpdir
   - default: _ahktmp
@@ -18,8 +18,9 @@ Nothing required.
   - default: _ahktmp/AutoHotkey32.exe
 - src
   - default: "" (just install ahk2exe and base)
-- opt
+- [opt](https://www.autohotkey.com/docs/v2/Scripts.htm#param_pairs)
   - default: ""
+  - useful examples are `/out foo.exe` and `/icon foo.ico`
 
 ## examples
 
