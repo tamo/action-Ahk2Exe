@@ -1,6 +1,6 @@
 # action-Ahk2Exe
 
-Converts AutoHotkey v2 scripts to executables with Ahk2Exe.
+Converts [AutoHotkey](https://github.com/AutoHotkey/AutoHotkey) v2 scripts to executables using [Ahk2Exe](https://github.com/AutoHotkey/Ahk2Exe).
 
 It downloads the latest versions of AutoHotkey and Ahk2Exe.
 
@@ -18,6 +18,7 @@ All optional.
   - default: _ahktmp/AutoHotkey32.exe
 - src
   - default: "" (just install ahk2exe and base)
+  - this is used as the `/in` option
 - [opt](https://www.autohotkey.com/docs/v2/Scripts.htm#param_pairs)
   - default: ""
   - useful examples are `/out foo.exe` and `/icon foo.ico`
