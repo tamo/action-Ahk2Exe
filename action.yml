@@ -56,9 +56,13 @@ runs:
         if (Test-Path "${{ inputs.base }}") {
           Write-Output "Base binary is already here";
         } else {
-          $AHKURL = latesturl "AutoHotkey/AutoHotkey" "application/zip" "v2.";
-          Write-Output "fetch ${AHKURL}";
-          fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
+          if (Test-Path "${{ inputs.tmpdir }}/ahk.zip" -and Test-Path "${{ inputs.tmpdir }}/${{ inputs.base }}") {
+            Copy-Item "${{ inputs.tmpdir }}/${{ inputs.base }}" "${{ inputs.base }}";
+          } else {
+            $AHKURL = latesturl "AutoHotkey/AutoHotkey" "application/zip" "v2.";
+            Write-Output "fetch ${AHKURL}";
+            fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
+          }
         }
         if (!(Test-Path "${{ inputs.ahk2exe }}") -or !(Test-Path "${{ inputs.base }}")) {
           Write-Output "Something failed";
