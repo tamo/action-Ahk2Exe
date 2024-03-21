@@ -10,16 +10,17 @@ It downloads the latest versions of AutoHotkey and Ahk2Exe.
 
 All optional.
 
-- tmpdir
-  - default: _ahktmp
-- ahk2exe
-  - default: _ahktmp/Ahk2Exe.exe
-- base
-  - default: _ahktmp/AutoHotkey32.exe
-- src
+- `tmpdir`
+  - default: `_ahktmp`
+- `ahk2exe`
+  - default: `_ahktmp/Ahk2Exe.exe`
+- `base`
+  - default: `_ahktmp/AutoHotkey32.exe`
+  - you can omit tmpdir (`_ahktmp/` by default)
+- `src`
   - default: "" (just install ahk2exe and base)
   - this is used as the `/in` option
-- [opt](https://www.autohotkey.com/docs/v2/Scripts.htm#param_pairs)
+- [`opt`](https://www.autohotkey.com/docs/v2/Scripts.htm#param_pairs)
   - default: ""
   - useful examples are `/out foo.exe` and `/icon foo.ico`
 
@@ -94,7 +95,7 @@ jobs:
       uses: tamo/action-Ahk2Exe@main
       with:
         src: RestoreWinPos.ahk
-        base: _ahktmp/AutoHotkey64.exe
+        base: AutoHotkey64.exe
         opt: /out RestoreWinPos64.exe
 
     - run: ls RestoreWinPos64.exe
