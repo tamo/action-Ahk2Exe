@@ -56,7 +56,7 @@ runs:
         if (Test-Path "${{ inputs.base }}") {
           Write-Output "Base binary is already here";
         } else {
-          if (Test-Path "${{ inputs.tmpdir }}/ahk.zip" -and Test-Path "${{ inputs.tmpdir }}/${{ inputs.base }}") {
+          if ((Test-Path "${{ inputs.tmpdir }}/ahk.zip") -and (Test-Path "${{ inputs.tmpdir }}/${{ inputs.base }}")) {
             Copy-Item "${{ inputs.tmpdir }}/${{ inputs.base }}" "${{ inputs.base }}";
           } else {
             $AHKURL = latesturl "AutoHotkey/AutoHotkey" "application/zip" "v2.";
