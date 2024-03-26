@@ -54,21 +54,23 @@ jobs:
         with:
           repository: Lexikos/dbgp
 
-      - name: v1 without compiling
+      - name: v1 without downloading Ahk2Exe
         uses: tamo/action-Ahk2Exe@main
         with:
           taghead: v1.1.
           base: _ahktmp/AutoHotkeyU32.exe
+          ahk2exe: _ahktmp/Compiler/Ahk2Exe.exe
 
-      - name: 32bit Unicode exe base in tmpdir
+      - name: 32bit Unicode exe base in tmpdir (with included Ahk2Exe)
         uses: tamo/action-Ahk2Exe@main
         with:
           src: dbgp_benchmark.ahk
           base: _ahktmp/AutoHotkeyU32.exe
+          ahk2exe: _ahktmp/Compiler/Ahk2Exe.exe
 
       - run: ls dbgp_benchmark.exe
 
-      - name: 32bit ANSI exe base in tmpdir
+      - name: 32bit ANSI exe base in tmpdir (download Ahk2Exe here)
         uses: tamo/action-Ahk2Exe@main
         with:
           src: dbgp_benchmark.ahk
