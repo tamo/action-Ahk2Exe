@@ -9,23 +9,25 @@ It downloads the latest versions of AutoHotkey and Ahk2Exe.
 All optional.
 
 - `src`
-  - default: "" (just install ahk2exe and base)
+  - default: "" (just install base and ahk2exe)
   - this is used as the `/in` option
 - `taghead`
   - default: `v2.`
   - you can use `v1.1.` for v1 scripts
 - `base`
   - default: `_ahktmp/AutoHotkey32.exe`
-  - you can omit tmpdir for exe files
+  - you can omit `tmpdir` for exe files (they will be copied from `tmpdir` to cwd)
     - v2 has `AutoHotkey32.exe` and `AutoHotkey64.exe`
-    - v1 has `AutoHotkeyU32.exe`, `AutoHotkeyU64.exe` and `AutoHotkeyA32.exe`
+    - v1 has `AutoHotkeyU32.exe`, `AutoHotkeyU64.exe` and [`AutoHotkeyA32.exe`](https://www.autohotkey.com/docs/v1/Compat.htm#Format)
 - [`opt`](https://www.autohotkey.com/docs/v2/Scripts.htm#param_pairs)
   - default: ""
   - useful examples are `/out foo.exe` and `/icon foo.ico`
 - `tmpdir`
   - default: `_ahktmp`
+  - other values (`base` and `ahk2exe`) don't refer to this value, so if you change this you have to change them as well
 - `ahk2exe`
   - default: `_ahktmp/Ahk2Exe.exe`
+  - AutoHotkey v1 is shipped with its own compiler, so you can use `_ahktmp/Compiler/Ahk2Exe.exe` if `taghead` points to v1
 
 ## Examples
 
