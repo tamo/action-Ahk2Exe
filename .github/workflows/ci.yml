@@ -11,14 +11,14 @@ jobs:
         with:
           repository: tamo/RestoreWinPos.ahk
 
-      - name: Ahk2Exe (32bit)
+      - name: 32bit base in tmpdir
         uses: tamo/action-Ahk2Exe@main
         with:
           src: RestoreWinPos.ahk
 
       - run: ls RestoreWinPos.exe
 
-      - name: Ahk2Exe (64bit)
+      - name: 64bit base in tmpdir
         uses: tamo/action-Ahk2Exe@main
         with:
           src: RestoreWinPos.ahk
@@ -26,3 +26,21 @@ jobs:
           opt: /out RestoreWinPos64.exe
 
       - run: ls RestoreWinPos64.exe
+
+      - name: 32bit base (copied)
+        uses: tamo/action-Ahk2Exe@main
+        with:
+          src: RestoreWinPos.ahk
+          base: AutoHotkey32.exe
+          opt: /out RestoreWinPos32copied.exe
+
+      - run: ls RestoreWinPos32copied.exe
+
+      - name: 64bit base (copied)
+        uses: tamo/action-Ahk2Exe@main
+        with:
+          src: RestoreWinPos.ahk
+          base: AutoHotkey64.exe
+          opt: /out RestoreWinPos64copied.exe
+
+      - run: ls RestoreWinPos64copied.exe
