@@ -50,13 +50,6 @@ runs:
             Copy-Item "${{ inputs.tmpdir }}/${file}" "${file}";
           }
         }
-        if (Test-Path "${{ inputs.ahk2exe }}") {
-          Write-Output "Ahk2Exe is already here";
-        } else {
-          $A2EURL = latesturl "AutoHotkey/Ahk2Exe" "application/x-zip-compressed" "Ahk2Exe";
-          Write-Output "fetch ${A2EURL}";
-          fetchit "${A2EURL}" "a2e.zip" "${{ inputs.ahk2exe }}";
-        }
         if (Test-Path "${{ inputs.base }}") {
           Write-Output "Base binary is already here";
         } else {
@@ -67,6 +60,13 @@ runs:
             Write-Output "fetch ${AHKURL}";
             fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
           }
+        }
+        if (Test-Path "${{ inputs.ahk2exe }}") {
+          Write-Output "Ahk2Exe is already here";
+        } else {
+          $A2EURL = latesturl "AutoHotkey/Ahk2Exe" "application/x-zip-compressed" "Ahk2Exe";
+          Write-Output "fetch ${A2EURL}";
+          fetchit "${A2EURL}" "a2e.zip" "${{ inputs.ahk2exe }}";
         }
         if (!(Test-Path "${{ inputs.ahk2exe }}") -or !(Test-Path "${{ inputs.base }}")) {
           Write-Output "Something failed";
