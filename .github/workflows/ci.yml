@@ -58,6 +58,7 @@ jobs:
         uses: tamo/action-Ahk2Exe@main
         with:
           taghead: v1.1.
+          base: _ahktmp/AutoHotkeyU32.exe
 
       - name: 32bit Unicode exe base in tmpdir
         uses: tamo/action-Ahk2Exe@main
