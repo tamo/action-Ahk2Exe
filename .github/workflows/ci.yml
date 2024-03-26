@@ -3,7 +3,7 @@ name: CI
 on: [push, workflow_dispatch]
 
 jobs:
-  build:
+  v2:
     runs-on: windows-latest
 
     steps:
@@ -44,3 +44,52 @@ jobs:
           opt: /out RestoreWinPos64copied.exe
 
       - run: ls RestoreWinPos64copied.exe
+
+
+  v1:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: Lexikos/dbgp
+
+      - name: v1 without compiling
+        uses: tamo/action-Ahk2Exe@main
+        with:
+          taghead: v1.1.
+
+      - name: 32bit Unicode exe base in tmpdir
+        uses: tamo/action-Ahk2Exe@main
+        with:
+          src: dbgp_benchmark.ahk
+          base: _ahktmp/AutoHotkeyU32.exe
+
+      - run: ls dbgp_benchmark.exe
+
+      - name: 32bit ANSI exe base in tmpdir
+        uses: tamo/action-Ahk2Exe@main
+        with:
+          src: dbgp_benchmark.ahk
+          base: _ahktmp/AutoHotkeyA32.exe
+          opt: /out dbgp_benchmarkA32.exe
+
+      - run: ls dbgp_benchmarkA32.exe
+
+      - name: 64bit Unicode exe base (copied)
+        uses: tamo/action-Ahk2Exe@main
+        with:
+          src: dbgp_benchmark.ahk
+          base: AutoHotkeyU64.exe
+          opt: /out dbgp_benchmarkU64.exe
+
+      - run: ls dbgp_benchmarkU64.exe
+
+      - name: 64bit Unicode bin base in tmpdir
+        uses: tamo/action-Ahk2Exe@main
+        with:
+          src: dbgp_benchmark.ahk
+          base: "_ahktmp/Compiler/Unicode 64-bit.bin"
+          opt: /out dbgp_benchmarkU64b.exe
+
+      - run: ls dbgp_benchmarkU64b.exe
