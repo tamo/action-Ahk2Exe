@@ -53,6 +53,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: Lexikos/dbgp
+          ref: one
 
       - name: v1 without downloading Ahk2Exe
         uses: tamo/action-Ahk2Exe@main
