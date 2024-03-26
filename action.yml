@@ -1,5 +1,5 @@
-name: Ahk2Exe v2 scripts
-description: Convert AutoHotkey v2 scripts to executables with Ahk2Exe
+name: action-Ahk2Exe
+description: Convert AutoHotkey scripts to executables with Ahk2Exe
 author: tamo
 
 inputs:
@@ -23,6 +23,10 @@ inputs:
     description: folder to download zips in
     required: false
     default: _ahktmp
+  taghead:
+    description: beginning of tag for base
+    required: false
+    default: v2.
 
 runs:
   using: composite
@@ -59,7 +63,7 @@ runs:
           if ((Test-Path "${{ inputs.tmpdir }}/ahk.zip") -and (Test-Path "${{ inputs.tmpdir }}/${{ inputs.base }}")) {
             Copy-Item "${{ inputs.tmpdir }}/${{ inputs.base }}" "${{ inputs.base }}";
           } else {
-            $AHKURL = latesturl "AutoHotkey/AutoHotkey" "application/zip" "v2.";
+            $AHKURL = latesturl "AutoHotkey/AutoHotkey" "application/zip" "${{ inputs.taghead }}";
             Write-Output "fetch ${AHKURL}";
             fetchit "${AHKURL}" "ahk.zip" "${{ inputs.base }}";
           }
