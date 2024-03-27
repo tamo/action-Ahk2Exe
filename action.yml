@@ -119,7 +119,7 @@ runs:
               ${src_path} = ".";
             }
             ${src_leafbase} = Split-Path "${src}" -LeafBase;
-            ${out} = "${src_path}/${src_leafbase}${out_suffix}.exe";
+            ${out} = Join-Path "${src_path}" "${src_leafbase}${out_suffix}.exe";
             & (Get-ChildItem "${env:AHK2EXE}") /silent verbose /base "${base}" /in "${src}" /out "${out}" ${{ inputs.opt }} | Out-Host;
             Write-Output "exit code is $LASTEXITCODE";
           }
