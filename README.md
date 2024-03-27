@@ -10,18 +10,21 @@ All optional.
 
 - `src`
   - default: "" (just install base and ahk2exe)
-  - this is used as the `/in` option
+  - if specified, this is used as the `/in` option
+    - this can be a comma-separated list such as `a.ahk,b.ahk,c.ahk`
 - `taghead`
   - default: `v2.`
   - you can use `v1.1.` for v1 scripts
 - `base`
   - default: `_ahktmp/AutoHotkey32.exe`
-  - you can omit `tmpdir` for exe files (they will be copied from `tmpdir` to cwd)
+  - you can omit `tmpdir` for exe files
+  - this can be a comma-separated list such as `AutoHotkey32.exe,AutoHotkey64.exe`
+    - if this contains multiple files, generated files will have suffix such as `32`, `64`, `U32`, `U64`, or `A32`
     - v2 has `AutoHotkey32.exe` and `AutoHotkey64.exe`
     - v1 has `AutoHotkeyU32.exe`, `AutoHotkeyU64.exe` and [`AutoHotkeyA32.exe`](https://www.autohotkey.com/docs/v1/Compat.htm#Format)
 - [`opt`](https://www.autohotkey.com/docs/v2/Scripts.htm#param_pairs)
   - default: ""
-  - useful examples are `/out foo.exe` and `/icon foo.ico`
+  - mostly for `/icon foo.ico`
 - `tmpdir`
   - default: `_ahktmp`
   - other values (`base` and `ahk2exe`) don't refer to this value, so if you change this you have to change them as well
@@ -72,7 +75,7 @@ jobs:
     - run: ls RestoreWinPos.exe
 ```
 
-#### Or use it multiple times after preparation.
+#### Specify multiple targets.
 
 ```yaml
 jobs:
@@ -94,16 +97,21 @@ jobs:
     - name: Ahk2Exe (32bit)
       uses: tamo/action-Ahk2Exe@main
       with:
-        src: RestoreWinPos.ahk
+        src: RestoreWinPos.ahk,AnotherSource.ahk
 
-    - run: ls RestoreWinPos.exe
+    - run: |
+        ls RestoreWinPos.exe
+        ls AnotherSource.exe
 
-    - name: Ahk2Exe (64bit)
+    - name: Ahk2Exe (multi-target)
       uses: tamo/action-Ahk2Exe@main
       with:
-        src: RestoreWinPos.ahk
-        base: AutoHotkey64.exe
-        opt: /out RestoreWinPos64.exe
+        src: RestoreWinPos.ahk,AnotherSource.ahk
+        base: AutoHotkey32.exe,AutoHotkey64.exe
 
-    - run: ls RestoreWinPos64.exe
+    - run: |
+        ls RestoreWinPos32.exe
+        ls RestoreWinPos64.exe
+        ls AnotherSource32.exe
+        ls AnotherSource64.exe
 ```
