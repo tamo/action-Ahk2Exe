@@ -12,7 +12,7 @@ jobs:
           repository: tamo/RestoreWinPos.ahk
 
       - name: 32bit and 64bit
-        uses: tamo/action-Ahk2Exe@main
+        uses: tamo/action-Ahk2Exe@${{ github.ref_name }}
         with:
           base: AutoHotkey32.exe,AutoHotkey64.exe
           src: RestoreWinPos.ahk
