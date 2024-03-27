@@ -8,11 +8,11 @@ inputs:
     required: false
     default: _ahktmp/Ahk2Exe.exe
   base:
-    description: binary to embed
+    description: binary file(s) to embed (comma-separated)
     required: false
     default: _ahktmp/AutoHotkey32.exe
   src:
-    description: script
+    description: script file(s) (comma-separated)
     required: false
     default: ""
   opt:
