@@ -87,23 +87,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Prepare Ahk2Exe
-      uses: tamo/action-Ahk2Exe@main
-
-    - run: |
-        ls _ahktmp/Ahk2Exe
-        ls _ahktmp/AutoHotkey32.exe
-        ls _ahktmp/AutoHotkey64.exe
-
-    - name: Ahk2Exe (32bit)
-      uses: tamo/action-Ahk2Exe@main
-      with:
-        src: RestoreWinPos.ahk,AnotherSource.ahk
-
-    - run: |
-        ls RestoreWinPos.exe
-        ls AnotherSource.exe
-
     - name: Ahk2Exe (multi-target)
       uses: tamo/action-Ahk2Exe@main
       with:
@@ -116,3 +99,36 @@ jobs:
         ls AnotherSource32.exe
         ls AnotherSource64.exe
 ```
+
+#### Do more precise work step by step.
+
+```yaml
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Prepare Ahk2Exe without compiling anything
+      uses: tamo/action-Ahk2Exe@main
+
+    - run: |
+        ls _ahktmp/Ahk2Exe
+        mv _ahktmp/AutoHotkey32.exe U32.exe
+        mv _ahktmp/AutoHotkey64.exe U64.exe
+
+    - name: Compile two targets, two bitnesses
+      uses: tamo/action-Ahk2Exe@main
+      with:
+        src: RestoreWinPos.ahk,AnotherSource.ahk
+        base: U32.exe,U64.exe
+
+    - run: |
+        ls RestoreWinPosU32.exe
+        ls RestoreWinPosU64.exe
+        ls AnotherSourceU32.exe
+        ls AnotherSourceU64.exe
+```
+
