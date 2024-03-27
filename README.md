@@ -25,6 +25,7 @@ All optional.
 - [`opt`](https://www.autohotkey.com/docs/v2/Scripts.htm#param_pairs)
   - default: ""
   - mostly for `/icon foo.ico`
+  - `/out` is automatically determined but `opt` can override it
 - `tmpdir`
   - default: `_ahktmp`
   - other values (`base` and `ahk2exe`) don't refer to this value, so if you change this you have to change them as well
