@@ -107,7 +107,7 @@ runs:
         BASES: ${{ steps.paths.outputs.BASES }}
       run: |
         ${bases} = ("${env:BASES}" -split ",");
-        ${needs_suffix} = ${bases}.count -gt 0;
+        ${needs_suffix} = ${bases}.count -gt 1;
         foreach (${base} in ${bases}) {
           ${out_suffix} = "";
           if (${needs_suffix} -and ((Split-Path "${base}" -LeafBase) -match "[UA]?(32|64)$")) {
