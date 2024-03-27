@@ -91,7 +91,7 @@ runs:
             ${base_array} += "${base}";
           } elseif (Test-Path "${{ inputs.tmpdir }}/${base}") {
             Write-Output "${base} found in ${{ inputs.tmpdir }}";
-            ${base_array} += "${{ inputs.tmpdir }}/${base}");
+            ${base_array} += "${{ inputs.tmpdir }}/${base}";
           } else {
             Write-Output "${base} not found";
             exit 1;
