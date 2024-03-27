@@ -12,7 +12,7 @@ jobs:
           repository: tamo/RestoreWinPos.ahk
 
       - name: 32bit and 64bit
-        uses: tamo/action-Ahk2Exe@multifile
+        uses: tamo/action-Ahk2Exe@main
         with:
           base: AutoHotkey32.exe,AutoHotkey64.exe
           src: RestoreWinPos.ahk
@@ -22,7 +22,7 @@ jobs:
           ls RestoreWinPos64.exe
 
       - name: 32bit simplest
-        uses: tamo/action-Ahk2Exe@multifile
+        uses: tamo/action-Ahk2Exe@main
         with:
           src: RestoreWinPos.ahk
 
@@ -33,7 +33,7 @@ jobs:
           cp RestoreWinPos.ahk src/RestoreWinPos-copied.ahk
 
       - name: 32bit and 64bit with tmpdir
-        uses: tamo/action-Ahk2Exe@multifile
+        uses: tamo/action-Ahk2Exe@main
         with:
           src: src/RestoreWinPos-copied.ahk
           base: _ahktmp/AutoHotkey32.exe,_ahktmp/AutoHotkey64.exe
@@ -52,14 +52,14 @@ jobs:
           ref: one
 
       - name: v1 without downloading Ahk2Exe
-        uses: tamo/action-Ahk2Exe@multifile
+        uses: tamo/action-Ahk2Exe@main
         with:
           taghead: v1.1.
           base: _ahktmp/AutoHotkeyU32.exe
           ahk2exe: _ahktmp/Compiler/Ahk2Exe.exe
 
       - name: 32bit Unicode exe base in tmpdir (with included Ahk2Exe)
-        uses: tamo/action-Ahk2Exe@multifile
+        uses: tamo/action-Ahk2Exe@main
         with:
           src: dbgp_benchmark.ahk
           base: _ahktmp/AutoHotkeyU32.exe
@@ -68,7 +68,7 @@ jobs:
       - run: ls dbgp_benchmark.exe
 
       - name: multiple (download Ahk2Exe here)
-        uses: tamo/action-Ahk2Exe@multifile
+        uses: tamo/action-Ahk2Exe@main
         with:
           src: dbgp_benchmark.ahk,dbgp_test.ahk
           base: AutoHotkeyA32.exe,AutoHotkeyU32.exe,AutoHotkeyU64.exe
@@ -86,7 +86,7 @@ jobs:
           cp *.ahk src/
 
       - name: 64bit Unicode bin base in tmpdir
-        uses: tamo/action-Ahk2Exe@multifile
+        uses: tamo/action-Ahk2Exe@main
         with:
           src: "src/dbgp_benchmark.ahk,src/dbgp_test.ahk"
           base: "_ahktmp/Compiler/Unicode 64-bit.bin"
